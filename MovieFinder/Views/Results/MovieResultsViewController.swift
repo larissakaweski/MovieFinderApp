@@ -10,13 +10,15 @@ import UIKit
 class MovieResultsViewController: UIViewController {
     
     private let contentView: MovieResultsView
-    private let viewModel: MovieSearchViewModel
+    private let viewModel: MovieResultViewModelProtocol
     
     private let searchQuery: String
     private var movies: [Movie] = []
-    private var hasMorePages = true
+    private var hasMorePages = false
     
-    init(searchQuery: String, contentView: MovieResultsView = MovieResultsView(), viewModel: MovieSearchViewModel = MovieSearchViewModel()) {
+    init(searchQuery: String,
+         contentView: MovieResultsView,
+         viewModel: MovieResultViewModelProtocol) {
         self.searchQuery = searchQuery
         self.contentView = contentView
         self.viewModel = viewModel
@@ -50,7 +52,7 @@ class MovieResultsViewController: UIViewController {
     }
     
     private func performSearch() {
-        viewModel.searchMovies(query: searchQuery)
+        viewModel.resultMovies(query: searchQuery, resetPage: true)
     }
     
     private func loadMoreMovies() {
@@ -61,8 +63,12 @@ class MovieResultsViewController: UIViewController {
 extension MovieResultsViewController: MovieResultsViewDelegate {
     func movieResultsView(_ view: MovieResultsView, didSelectMovieAt indexPath: IndexPath) {
         let movie = movies[indexPath.row]
-        let viewModel = MovieDetailViewModel(movie: movie)
-        let detailVC = MovieDetailViewController(movie: movie, viewModel: viewModel)
+        let movieService = MovieService()
+        let view = MovieDetailView()
+        
+        let viewModel = MovieDetailViewModel(movie: movie, movieService: movieService, favoritesService: FavoritesService.shared)
+        
+        let detailVC = MovieDetailViewController(movie: movie, contentView: view, viewModel: viewModel)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -81,7 +87,7 @@ extension MovieResultsViewController: MovieResultsViewDelegate {
     }
 }
 
-extension MovieResultsViewController: MovieSearchViewModelDelegate {
+extension MovieResultsViewController: MovieResultViewModelDelegate {
     func didUpdateMovies() {
         movies = viewModel.movies
         hasMorePages = viewModel.hasMorePages

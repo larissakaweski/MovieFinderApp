@@ -11,15 +11,17 @@ import XCTest
 class FavoritesServiceTests: XCTestCase {
     
     var favoritesService: FavoritesService!
+    var mockUserDefaults: MockUserDefaults!
     
     override func setUp() {
         super.setUp()
-        favoritesService = FavoritesService.shared
-        favoritesService.clearFavorites() // Clear any existing favorites
+        mockUserDefaults = MockUserDefaults()
+        favoritesService = FavoritesService(userDefaults: mockUserDefaults)
     }
     
     override func tearDown() {
-        favoritesService.clearFavorites()
+        favoritesService = nil
+        mockUserDefaults = nil
         super.tearDown()
     }
     
@@ -33,6 +35,7 @@ class FavoritesServiceTests: XCTestCase {
         // Then
         XCTAssertTrue(favoritesService.isFavorite(movie))
         XCTAssertEqual(favoritesService.getFavorites().count, 1)
+        XCTAssertTrue(mockUserDefaults.setCalled)
     }
     
     func testAddToFavoritesDuplicate() {
@@ -45,7 +48,7 @@ class FavoritesServiceTests: XCTestCase {
         
         // Then
         XCTAssertTrue(favoritesService.isFavorite(movie))
-        XCTAssertEqual(favoritesService.getFavorites().count, 1) // Should still be only 1
+        XCTAssertEqual(favoritesService.getFavorites().count, 1)
     }
     
     func testRemoveFromFavorites() {
@@ -59,6 +62,7 @@ class FavoritesServiceTests: XCTestCase {
         // Then
         XCTAssertFalse(favoritesService.isFavorite(movie))
         XCTAssertEqual(favoritesService.getFavorites().count, 0)
+        XCTAssertTrue(mockUserDefaults.setCalled)
     }
     
     func testRemoveFromFavoritesNotInFavorites() {
@@ -117,6 +121,7 @@ class FavoritesServiceTests: XCTestCase {
         XCTAssertEqual(favoritesService.getFavorites().count, 0)
         XCTAssertFalse(favoritesService.isFavorite(movie1))
         XCTAssertFalse(favoritesService.isFavorite(movie2))
+        XCTAssertTrue(mockUserDefaults.removeObjectCalled)
     }
     
     func testMultipleMovies() {
@@ -145,6 +150,41 @@ class FavoritesServiceTests: XCTestCase {
         XCTAssertTrue(favoritesService.isFavorite(movies[2]))
     }
     
+    func testGetFavoritesWithInvalidData() {
+        // Given
+        mockUserDefaults.mockData = Data("invalid json".utf8)
+        
+        // When
+        let favorites = favoritesService.getFavorites()
+        
+        // Then
+        XCTAssertEqual(favorites.count, 0)
+    }
+    
+    func testGetFavoritesWithNoData() {
+        // Given
+        mockUserDefaults.mockData = nil
+        
+        // When
+        let favorites = favoritesService.getFavorites()
+        
+        // Then
+        XCTAssertEqual(favorites.count, 0)
+    }
+    
+    func testSaveFavoritesWithEncodingError() {
+        // Given
+        let movie = createMockMovie()
+        mockUserDefaults.shouldFailSet = true
+        
+        // When
+        favoritesService.addToFavorites(movie)
+        
+        // Then
+        // Should not crash, just log error
+        XCTAssertTrue(mockUserDefaults.setCalled)
+    }
+    
     // MARK: - Helper Methods
     private func createMockMovie(id: Int = 1, title: String = "Test Movie") -> Movie {
         return Movie(
@@ -161,4 +201,21 @@ class FavoritesServiceTests: XCTestCase {
             revenue: 5000000
         )
     }
+}
+
+// MARK: - Helper Methods
+private func createMockMovie(id: Int = 1, title: String = "Test Movie") -> Movie {
+    return Movie(
+        id: id,
+        title: title,
+        originalTitle: "\(title) Original",
+        overview: "Test overview",
+        posterPath: "/test.jpg",
+        backdropPath: "/test_backdrop.jpg",
+        releaseDate: "2023-01-01",
+        voteAverage: 8.5,
+        voteCount: 1000,
+        budget: 1000000,
+        revenue: 5000000
+    )
 } 

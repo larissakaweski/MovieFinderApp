@@ -10,9 +10,10 @@ import UIKit
 class FavoritesViewController: UIViewController {
     
     private let contentView: FavoritesView
-    private let viewModel: FavoritesViewModel
+    private let viewModel: FavoritesViewModelProtocol
     
-    init(contentView: FavoritesView = FavoritesView(), viewModel: FavoritesViewModel = FavoritesViewModel()) {
+    init(contentView: FavoritesView,
+         viewModel: FavoritesViewModelProtocol) {
         self.contentView = contentView
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -51,8 +52,11 @@ class FavoritesViewController: UIViewController {
 // MARK: - FavoritesViewDelegate
 extension FavoritesViewController: FavoritesViewDelegate {
     func favoritesView(_ view: FavoritesView, didSelectMovie movie: Movie) {
-        let viewModel = MovieDetailViewModel(movie: movie)
-        let detailViewController = MovieDetailViewController(movie: movie, viewModel: viewModel)
+        let movieService = MovieService()
+        let view = MovieDetailView()
+        
+        let viewModel = MovieDetailViewModel(movie: movie, movieService: movieService, favoritesService: FavoritesService.shared)
+        let detailViewController = MovieDetailViewController(movie: movie, contentView: view, viewModel: viewModel)
         navigationController?.pushViewController(detailViewController, animated: true)
     }
     

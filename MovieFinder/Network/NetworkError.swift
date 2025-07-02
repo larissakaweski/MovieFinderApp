@@ -7,12 +7,13 @@
 
 import Foundation
 
-enum NetworkError: Error, LocalizedError {
+enum NetworkError: Error, LocalizedError, Equatable {
     case invalidURL
     case noData
     case decodingError
     case serverError(String)
-    case networkError(Error)
+    case networkError(String)
+    case invalidResponse
     
     var errorDescription: String? {
         switch self {
@@ -25,7 +26,9 @@ enum NetworkError: Error, LocalizedError {
         case .serverError(let message):
             return "Erro do servidor: \(message)"
         case .networkError(let error):
-            return "Erro de rede: \(error.localizedDescription)"
+            return "Erro de rede: \(error)"
+        case .invalidResponse:
+            return "Resposta inválida do servidor"
         }
     }
 } 

@@ -10,11 +10,9 @@ import UIKit
 class MovieSearchViewController: UIViewController {
     
     private let contentView: MovieSearchView
-    private let viewModel: MovieSearchViewModel
     
-    init(contentView: MovieSearchView = MovieSearchView(), viewModel: MovieSearchViewModel = MovieSearchViewModel()) {
+    init(contentView: MovieSearchView) {
         self.contentView = contentView
-        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,7 +37,6 @@ class MovieSearchViewController: UIViewController {
     
     private func setupDelegates() {
         contentView.delegate = self
-        viewModel.delegate = self
     }
 }
 
@@ -48,26 +45,12 @@ extension MovieSearchViewController: MovieSearchViewDelegate {
     func movieSearchViewDidTapSearch(_ view: MovieSearchView) {
         guard let searchText = view.searchText, !searchText.isEmpty else { return }
         
-        let resultsViewController = MovieResultsViewController(searchQuery: searchText)
+        let view = MovieResultsView()
+        let movieService = MovieService()
+        
+        let viewModel = MovieResultViewModel(movieService: movieService, favoritesService: FavoritesService.shared)
+        let resultsViewController = MovieResultsViewController(searchQuery: searchText, contentView: view, viewModel: viewModel)
         navigationController?.pushViewController(resultsViewController, animated: true)
     }
 }
 
-// MARK: - MovieSearchViewModelDelegate
-extension MovieSearchViewController: MovieSearchViewModelDelegate {
-    func didUpdateMovies() {
-        // Não é usado nesta tela
-    }
-    
-    func didStartLoading() {
-        // Não é usado nesta tela
-    }
-    
-    func didFinishLoading() {
-        // Não é usado nesta tela
-    }
-    
-    func didShowError(_ message: String) {
-        // Não é usado nesta tela
-    }
-} 

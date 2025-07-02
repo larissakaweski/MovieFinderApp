@@ -7,16 +7,7 @@
 
 import Foundation
 
-// MARK: - Shared Helper Function
-private func formatCurrency(_ value: Int) -> String {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .currency
-    formatter.currencyCode = "USD"
-    formatter.maximumFractionDigits = 0
-    return formatter.string(from: NSNumber(value: value)) ?? "$\(value)"
-}
-
-struct Movie: Codable {
+struct Movie: Codable, Equatable {
     let id: Int
     let title: String
     let originalTitle: String
@@ -55,16 +46,16 @@ struct Movie: Codable {
     
     var formattedBudget: String {
         guard let budget = budget, budget > 0 else { return "N/A" }
-        return formatCurrency(budget)
+        return budget.formatCurrency()
     }
     
     var formattedRevenue: String {
         guard let revenue = revenue, revenue > 0 else { return "N/A" }
-        return formatCurrency(revenue)
+        return revenue.formatCurrency()
     }
 }
 
-struct MovieResponse: Codable {
+struct MovieResponse: Codable, Equatable {
     let page: Int
     let results: [Movie]
     let totalPages: Int
@@ -78,7 +69,7 @@ struct MovieResponse: Codable {
     }
 }
 
-struct MovieDetail: Codable {
+struct MovieDetail: Codable, Equatable {
     let id: Int
     let title: String
     let originalTitle: String
@@ -123,12 +114,12 @@ struct MovieDetail: Codable {
     
     var formattedBudget: String {
         guard let budget = budget, budget > 0 else { return "N/A" }
-        return formatCurrency(budget)
+        return budget.formatCurrency()
     }
     
     var formattedRevenue: String {
         guard let revenue = revenue, revenue > 0 else { return "N/A" }
-        return formatCurrency(revenue)
+        return revenue.formatCurrency()
     }
     
     func asMovie() -> Movie {
@@ -148,19 +139,21 @@ struct MovieDetail: Codable {
     }
 }
 
-struct Genre: Codable {
+struct Genre: Codable, Equatable {
     let id: Int
     let name: String
 }
 
-struct ProductionCompany: Codable {
+struct ProductionCompany: Codable, Equatable {
     let id: Int
     let name: String
     let logoPath: String?
+    let originCountry: String?
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case logoPath = "logo_path"
+        case originCountry = "origin_country"
     }
 } 

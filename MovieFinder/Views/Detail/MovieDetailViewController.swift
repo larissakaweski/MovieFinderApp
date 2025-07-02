@@ -13,12 +13,12 @@ class MovieDetailViewController: UIViewController {
     private let contentView: MovieDetailView
     
     // MARK: - Properties
-    private let viewModel: MovieDetailViewModel
+    private let viewModel: MovieDetailViewModelProtocol
     
     // MARK: - Initialization
     init(movie: Movie,
-         contentView: MovieDetailView = MovieDetailView(),
-         viewModel: MovieDetailViewModel) {
+         contentView: MovieDetailView,
+         viewModel: MovieDetailViewModelProtocol) {
         self.contentView = contentView
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

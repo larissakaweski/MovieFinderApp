@@ -12,14 +12,22 @@ protocol FavoritesViewModelDelegate: AnyObject {
     func didShowError(_ message: String)
 }
 
-class FavoritesViewModel {
+protocol FavoritesViewModelProtocol: AnyObject {
+    var delegate: FavoritesViewModelDelegate? { get set }
+    var favorites: [Movie] { get }
+    
+    func loadFavorites()
+    func removeFromFavorites(_ movie: Movie)
+}
+
+class FavoritesViewModel: FavoritesViewModelProtocol {
     weak var delegate: FavoritesViewModelDelegate?
     
     private let favoritesService: FavoritesServiceProtocol
     
     private(set) var favorites: [Movie] = []
     
-    init(favoritesService: FavoritesServiceProtocol = FavoritesService.shared) {
+    init(favoritesService: FavoritesServiceProtocol) {
         self.favoritesService = favoritesService
     }
     
@@ -33,13 +41,6 @@ class FavoritesViewModel {
     func removeFromFavorites(_ movie: Movie) {
         favoritesService.removeFromFavorites(movie)
         loadFavorites()
-    }
-    
-    // MARK: - Clear All Favorites
-    func clearAllFavorites() {
-        favoritesService.clearFavorites()
-        favorites = []
-        delegate?.didUpdateFavorites()
     }
     
     // MARK: - Check if Empty

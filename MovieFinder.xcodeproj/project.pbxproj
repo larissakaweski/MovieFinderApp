@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		594FB8FB2E15A10A007513EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5968EC462E105121006CBD0D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5968EC4D2E105121006CBD0D;
+			remoteInfo = MovieFinder;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		594FB8F72E15A10A007513EB /* MovieFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5968EC4E2E105121006CBD0D /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		594FB8F82E15A10A007513EB /* MovieFinderTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MovieFinderTests;
+			sourceTree = "<group>";
+		};
 		5968EC502E105121006CBD0D /* MovieFinder */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = MovieFinder;
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		594FB8F42E15A10A007513EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5968EC4B2E105121006CBD0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				5968EC502E105121006CBD0D /* MovieFinder */,
+				594FB8F82E15A10A007513EB /* MovieFinderTests */,
 				5968EC4F2E105121006CBD0D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				5968EC4E2E105121006CBD0D /* MovieFinder.app */,
+				594FB8F72E15A10A007513EB /* MovieFinderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		594FB8F62E15A10A007513EB /* MovieFinderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 594FB8FF2E15A10A007513EB /* Build configuration list for PBXNativeTarget "MovieFinderTests" */;
+			buildPhases = (
+				594FB8F32E15A10A007513EB /* Sources */,
+				594FB8F42E15A10A007513EB /* Frameworks */,
+				594FB8F52E15A10A007513EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				594FB8FC2E15A10A007513EB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				594FB8F82E15A10A007513EB /* MovieFinderTests */,
+			);
+			name = MovieFinderTests;
+			packageProductDependencies = (
+			);
+			productName = MovieFinderTests;
+			productReference = 594FB8F72E15A10A007513EB /* MovieFinderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5968EC4D2E105121006CBD0D /* MovieFinder */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5968EC612E105123006CBD0D /* Build configuration list for PBXNativeTarget "MovieFinder" */;
@@ -80,6 +128,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					594FB8F62E15A10A007513EB = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 5968EC4D2E105121006CBD0D;
+					};
 					5968EC4D2E105121006CBD0D = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				5968EC4D2E105121006CBD0D /* MovieFinder */,
+				594FB8F62E15A10A007513EB /* MovieFinderTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		594FB8F52E15A10A007513EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5968EC4C2E105121006CBD0D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		594FB8F32E15A10A007513EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5968EC4A2E105121006CBD0D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,49 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		594FB8FC2E15A10A007513EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5968EC4D2E105121006CBD0D /* MovieFinder */;
+			targetProxy = 594FB8FB2E15A10A007513EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		594FB8FD2E15A10A007513EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = movie.MovieFinderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MovieFinder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MovieFinder";
+			};
+			name = Debug;
+		};
+		594FB8FE2E15A10A007513EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = movie.MovieFinderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MovieFinder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MovieFinder";
+			};
+			name = Release;
+		};
 		5968EC622E105123006CBD0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -311,6 +420,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		594FB8FF2E15A10A007513EB /* Build configuration list for PBXNativeTarget "MovieFinderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				594FB8FD2E15A10A007513EB /* Debug */,
+				594FB8FE2E15A10A007513EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5968EC492E105121006CBD0D /* Build configuration list for PBXProject "MovieFinder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

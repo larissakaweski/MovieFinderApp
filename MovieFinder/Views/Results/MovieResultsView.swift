@@ -51,7 +51,7 @@ class MovieResultsView: UIView {
     
     private var movies: [Movie] = []
     private var isLoading = false
-    private var hasMorePages = true
+    private var hasMorePages = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)

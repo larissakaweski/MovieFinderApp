@@ -60,4 +60,8 @@ enum ServiceRequest {
             return "\(path)/\(movieId)"
         }
     }
+    
+    var endpoint: String {
+        return fullPath
+    }
 }

@@ -15,7 +15,17 @@ protocol MovieDetailViewModelDelegate: AnyObject {
     func didStopLoading()
 }
 
-class MovieDetailViewModel {
+protocol MovieDetailViewModelProtocol: AnyObject {
+    var delegate: MovieDetailViewModelDelegate? { get set }
+    var currentMovie: Movie { get }
+    var isFavorite: Bool { get }
+    
+    func toggleFavorite()
+    func loadMovieDetails()
+}
+
+
+class MovieDetailViewModel: MovieDetailViewModelProtocol {
     
     // MARK: - Properties
     weak var delegate: MovieDetailViewModelDelegate?
@@ -38,8 +48,8 @@ class MovieDetailViewModel {
     
     // MARK: - Initialization
     init(movie: Movie,
-         movieService: MovieServiceProtocol = MovieService(),
-         favoritesService: FavoritesServiceProtocol = FavoritesService.shared) {
+         movieService: MovieServiceProtocol,
+         favoritesService: FavoritesServiceProtocol) {
         self.movie = movie
         self.movieService = movieService
         self.favoritesService = favoritesService
@@ -73,13 +83,11 @@ class MovieDetailViewModel {
     }
     
     func toggleFavorite() {
-        let movie = currentMovie
-        
-        if favoritesService.isFavorite(movie) {
-            favoritesService.removeFromFavorites(movie)
+        if favoritesService.isFavorite(currentMovie) {
+            favoritesService.removeFromFavorites(currentMovie)
             delegate?.didUpdateFavoriteStatus(false)
         } else {
-            favoritesService.addToFavorites(movie)
+            favoritesService.addToFavorites(currentMovie)
             delegate?.didUpdateFavoriteStatus(true)
         }
     }

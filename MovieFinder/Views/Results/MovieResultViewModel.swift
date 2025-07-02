@@ -7,15 +7,26 @@
 
 import Foundation
 
-protocol MovieSearchViewModelDelegate: AnyObject {
+protocol MovieResultViewModelDelegate: AnyObject {
     func didUpdateMovies()
     func didStartLoading()
     func didFinishLoading()
     func didShowError(_ message: String)
 }
 
-class MovieSearchViewModel {
-    weak var delegate: MovieSearchViewModelDelegate?
+protocol MovieResultViewModelProtocol: AnyObject {
+    var delegate: MovieResultViewModelDelegate? { get set }
+    var movies: [Movie] { get }
+    var hasMorePages: Bool { get }
+    
+    func isFavorite(_ movie: Movie) -> Bool
+    func resultMovies(query: String, resetPage: Bool)
+    func loadMoreMovies(query: String)
+    func toggleFavorite(_ movie: Movie)
+}
+
+class MovieResultViewModel: MovieResultViewModelProtocol {
+    weak var delegate: MovieResultViewModelDelegate?
     
     private let movieService: MovieServiceProtocol
     private let favoritesService: FavoritesServiceProtocol
@@ -23,16 +34,16 @@ class MovieSearchViewModel {
     private(set) var movies: [Movie] = []
     private(set) var isLoading = false
     private(set) var currentPage = 1
-    private(set) var hasMorePages = true
+    private(set) var hasMorePages = false
     
-    init(movieService: MovieServiceProtocol = MovieService(),
-         favoritesService: FavoritesServiceProtocol = FavoritesService.shared) {
+    init(movieService: MovieServiceProtocol,
+         favoritesService: FavoritesServiceProtocol) {
         self.movieService = movieService
         self.favoritesService = favoritesService
     }
     
     // MARK: - Search Movies
-    func searchMovies(query: String, resetPage: Bool = true) {
+    func resultMovies(query: String, resetPage: Bool = true) {
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             movies = []
             delegate?.didUpdateMovies()
@@ -61,7 +72,7 @@ class MovieSearchViewModel {
                         self?.movies.append(contentsOf: newMovies)
                     }
                     
-                    self?.hasMorePages = newMovies.count > 0
+                    self?.hasMorePages = self?.currentPage ?? 0 < movieResponse.totalPages
                     self?.delegate?.didUpdateMovies()
                     
                 case .failure(let error):
@@ -76,7 +87,7 @@ class MovieSearchViewModel {
         guard !isLoading && hasMorePages else { return }
         
         currentPage += 1
-        searchMovies(query: query, resetPage: false)
+        resultMovies(query: query, resetPage: false)
     }
     
     // MARK: - Favorites Management
@@ -96,7 +107,7 @@ class MovieSearchViewModel {
     func clearResults() {
         movies = []
         currentPage = 1
-        hasMorePages = true
+        hasMorePages = false
         delegate?.didUpdateMovies()
     }
 } 

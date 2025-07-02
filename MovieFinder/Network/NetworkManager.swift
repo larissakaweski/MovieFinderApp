@@ -51,7 +51,7 @@ class NetworkManager: NetworkManagerProtocol {
                 self?.currentTask = nil
                 
                 if let error = error {
-                    completion(.failure(.networkError(error)))
+                    completion(.failure(.networkError(error.localizedDescription)))
                     return
                 }
                 

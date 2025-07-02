@@ -33,8 +33,8 @@ class ImageLoader {
         }
         
         let task = session.dataTask(with: url) { [weak self] data, response, error in
-                if let data = data, let image = UIImage(data: data) {
-                    if let response = response {
+                if let data, let image = UIImage(data: data) {
+                    if let response {
                         let cachedResponse = CachedURLResponse(response: response, data: data)
                         self?.cache.storeCachedResponse(cachedResponse, for: URLRequest(url: url))
                     }

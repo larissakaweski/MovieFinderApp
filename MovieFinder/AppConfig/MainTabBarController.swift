@@ -23,8 +23,12 @@ class MainTabBarController: UITabBarController {
     
     private func setupViewControllers() {
         // MARK: - Busca Tab
-        let searchViewController = MovieSearchViewController()
+        
+        let view = MovieSearchView()
+        
+        let searchViewController = MovieSearchViewController(contentView: view)
         let searchNavigationController = UINavigationController(rootViewController: searchViewController)
+        
         searchNavigationController.tabBarItem = UITabBarItem(
             title: "Busca",
             image: UIImage(systemName: "magnifyingglass"),
@@ -32,8 +36,11 @@ class MainTabBarController: UITabBarController {
         )
         
         // MARK: - Favoritos Tab
-        let favoritesViewController = FavoritesViewController()
+        let favoritesViewModel = FavoritesViewModel(favoritesService: FavoritesService.shared)
+        let favoriteView = FavoritesView()
+        let favoritesViewController = FavoritesViewController(contentView: favoriteView, viewModel: favoritesViewModel)
         let favoritesNavigationController = UINavigationController(rootViewController: favoritesViewController)
+        
         favoritesNavigationController.tabBarItem = UITabBarItem(
             title: "Favoritos",
             image: UIImage(systemName: "heart"),

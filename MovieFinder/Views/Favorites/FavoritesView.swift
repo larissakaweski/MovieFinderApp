@@ -103,7 +103,7 @@ extension FavoritesView: UICollectionViewDataSource, UICollectionViewDelegateFlo
         let movie = favorites[indexPath.row]
         cell.updateView(with: movie, isFavorite: true)
         cell.onFavoriteButtonTapped = { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.delegate?.favoritesView(self, didTapRemoveFavorite: movie)
         }
         return cell
