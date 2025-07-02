@@ -6,7 +6,7 @@ Um aplicativo iOS nativo para busca e descoberta de filmes, desenvolvido com UIK
 
 - **Busca de Filmes**: Interface intuitiva para buscar filmes por título
 - **Listagem em Grid**: Visualização organizada dos resultados de busca
-- **Detalhes Completos**: Informações detalhadas incluindo sinopse, elenco, avaliações e dados financeiros
+- **Detalhes Completos**: Informações detalhadas incluindo sinopse, avaliações e dados financeiros
 - **Sistema de Favoritos**: Salvar e gerenciar filmes favoritos com persistência local
 - **Cache de Imagens**: Carregamento otimizado de posters com cache automático
 - **Interface Responsiva**: Design adaptável para diferentes tamanhos de tela
@@ -153,14 +153,32 @@ MovieFinder/
 
 ## 🧪 Testes
 
-O projeto inclui testes unitários para os componentes principais:
+O projeto inclui uma suíte completa de testes unitários seguindo o padrão MVVM e utilizando XCTest framework com mocking adequado e injeção de dependências.
 
-- **MovieSearchViewModelTests**: Testes do ViewModel de busca
-- **FavoritesServiceTests**: Testes do serviço de favoritos
+### 📋 Cobertura de Testes
 
-Para executar os testes:
-1. Abra o projeto no Xcode
-2. Pressione ⌘+U ou vá em Product > Test
+A suíte de testes cobre:
+- **Modelos**: Validação e serialização do modelo Movie
+- **Serviços**: MovieService e FavoritesService com integração de API e persistência
+- **ViewModels**: Lógica de negócio de todas as telas (busca, resultados, detalhes, favoritos)
+- **Integração**: Tratamento de erros, operações assíncronas e fluxos de usuário
+
+### 🚀 Executando os Testes
+
+#### No Xcode
+1. Abra o arquivo `MovieFinder.xcodeproj`
+2. Selecione o target `MovieFinderTests`
+3. Pressione ⌘+U para executar todos os testes
+
+#### Via Linha de Comando
+```bash
+# Executar todos os testes
+xcodebuild test -project MovieFinder.xcodeproj -scheme MovieFinder -destination 'platform=iOS Simulator,name=iPhone 15'
+```
+
+### 📚 Documentação Detalhada
+
+Para informações completas sobre a estratégia de testes, arquivos de teste, classes mock, padrões utilizados e exemplos específicos, consulte o arquivo `MovieFinderTests/README_Tests.md`.
 
 ## 📊 Modelo de Dados
 
@@ -193,9 +211,7 @@ struct Movie: Codable {
 
 ## 🚀 Melhorias Futuras
 
-- [ ] Implementação de Core Data para persistência robusta
 - [ ] Suporte a diferentes idiomas (Localization)
-- [ ] Modo escuro (Dark Mode)
 - [ ] Widgets para iOS
 - [ ] Testes de UI automatizados
 - [ ] Animações e transições suaves
@@ -213,13 +229,6 @@ Contribuições são bem-vindas! Sinta-se à vontade para:
 - Sugerir novas funcionalidades
 - Enviar pull requests
 - Melhorar a documentação
-
-## 📞 Suporte
-
-Para dúvidas ou problemas:
-1. Verifique se a API key está configurada corretamente
-2. Confirme que está usando a versão correta do Xcode
-3. Limpe o projeto (Product > Clean Build Folder) se houver problemas de build
 
 ---
 
